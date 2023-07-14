@@ -16,24 +16,19 @@ import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.services.UserService;
 
 @Controller
-@RequestMapping("/")
-public class FrontendController {
+@RequestMapping("/user/")
+public class FrontendUserController {
 
 	@Autowired
 	private UserService userService;
 
-	@GetMapping
-	public String index(Model model) {
-		return "index";
-	}
-
-	@GetMapping("/register_user")
+	@GetMapping("/register")
 	public String registerUser(Model model) {
 		model.addAttribute("user", new User());
 		return "registerUser";
 	}
 
-	@GetMapping("/users")
+	@GetMapping("/all")
 	public String allUsers(Model model) {
 		List<User> users = userService.findAll();
 		model.addAttribute("users", users);
@@ -62,7 +57,7 @@ public class FrontendController {
 	@GetMapping("/remove/")
 	public RedirectView removeUser(Model model, @RequestParam(value = "id") Long id) {
 		userService.delete(id);
-		return new RedirectView("/users");
+		return new RedirectView("/user/all");
 	}
 
 }

@@ -11,6 +11,7 @@
 <body>
 	<h1>All users</h1>
 	<a th:href="@{/}">Index</a>
+	<a th:href="@{/user/register}">Register user</a>
 
 	<div id="wrapper">
 		<header id="home">
@@ -20,8 +21,8 @@
 					<p th:text="${user.name}"></p>
 					<p th:text="${user.email}"></p>
 					<p th:text="${user.phone}"></p>
-					<a th:href="@{/update/(id=${user.id})}">Update</a>
-					<a th:href="@{/remove/(id=${user.id})}">Remove</a>
+					<a th:href="@{/user/update/(id=${user.id})}">Update</a>
+					<a th:href="@{/user/remove/(id=${user.id})}">Remove</a>
 					<br>
 				</div>
 			</div>
