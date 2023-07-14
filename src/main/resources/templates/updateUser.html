@@ -1,0 +1,37 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Person</title>
+</head>
+
+<body>
+	<h1>User data: </h1>
+	<a th:href="@{/}">Index</a>
+
+	<form th:action="@{/update}" th:object="${user}" method="post">
+		<div>
+			<label th:for="id">Id:</label>
+			<input type="text" th:field="*{id}" placeholder="Id" readonly>
+		</div>
+		<div>
+			<label th:for="name">Name:</label>
+			<input type="text" th:field="*{name}" placeholder="Name" required="required">
+		</div>
+		<div>
+			<label th:for="email">Email:</label>
+			<input type="text" th:field="*{email}" placeholder="Email" required="required">
+		</div>
+		<div>
+			<label th:for="phone">Phone:</label>
+			<input type="text" th:field="*{phone}" placeholder="Phone" required="required">
+		</div>
+		<div>
+			<button type="submit">Send</button>
+		</div>
+	</form>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>All</title>
+</head>
+
+<body>
+	<h1>All users</h1>
+	<a th:href="@{/}">Index</a>
+
+	<div id="wrapper">
+		<header id="home">
+			<div id="serviceGalery">
+				<div class="users" th:each="user : ${users}">
+					<p th:value="${user.id}"></p>
+					<p th:text="${user.name}"></p>
+					<p th:text="${user.email}"></p>
+					<p th:text="${user.phone}"></p>
+					<a th:href="@{/update/(id=${user.id})}">Update</a>
+					<br>
+				</div>
+			</div>
+		</header>
+	</div>
+</body>
+
+</html>
