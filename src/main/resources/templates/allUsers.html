@@ -21,6 +21,7 @@
 					<p th:text="${user.email}"></p>
 					<p th:text="${user.phone}"></p>
 					<a th:href="@{/update/(id=${user.id})}">Update</a>
+					<a th:href="@{/remove/(id=${user.id})}">Remove</a>
 					<br>
 				</div>
 			</div>

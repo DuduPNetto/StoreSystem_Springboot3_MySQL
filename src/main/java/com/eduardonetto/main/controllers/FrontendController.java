@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.services.UserService;
@@ -56,6 +57,12 @@ public class FrontendController {
 	public String userUpdate(@ModelAttribute User user) {
 		userService.update(user.getId(), user);
 		return "userChanged";
+	}
+
+	@GetMapping("/remove/")
+	public RedirectView removeUser(Model model, @RequestParam(value = "id") Long id) {
+		userService.delete(id);
+		return new RedirectView("/users");
 	}
 
 }
