@@ -27,7 +27,7 @@ public class FrontendController {
 		return "index";
 	}
 
-	@GetMapping("/register")
+	@GetMapping("/register_user")
 	public String registerUser(Model model) {
 		model.addAttribute("user", new User());
 		return "registerUser";
