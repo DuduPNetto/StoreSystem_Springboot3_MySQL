@@ -5,18 +5,19 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>All Users</title>
+	<title>User</title>
 </head>
 
 <body>
-	<h1>All users</h1>
+	<h1>User</h1>
 	<a th:href="@{/}">Index</a>
+	<a th:href="@{/user/all}">All users</a>
 	<a th:href="@{/user/register}">Register user</a>
 
 	<div id="wrapper">
 		<header id="home">
 			<div id="serviceGalery">
-				<div class="users" th:each="user : ${users}">
+				<div class="user">
 					<br>
 					<p th:text="${user.id}"></p>
 					<p th:text="${user.name}"></p>
@@ -24,7 +25,6 @@
 					<p th:text="${user.phone}"></p>
 					<a th:href="@{/user/update/(id=${user.id})}">Update</a>
 					<a th:href="@{/user/remove/(id=${user.id})}">Remove</a>
-					<a th:href="@{/user/(id=${user.id})}">See</a>
 					<br>
 				</div>
 			</div>

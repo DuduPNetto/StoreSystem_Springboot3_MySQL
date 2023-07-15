@@ -35,6 +35,13 @@ public class FrontendUserController {
 		return "allUsers";
 	}
 
+	@GetMapping("/")
+	public String findById(Model model, @RequestParam(value = "id") Long id) {
+		User user = userService.findById(id);
+		model.addAttribute("user", user);
+		return "findUser";
+	}
+
 	@PostMapping("/create")
 	public String userCreated(@ModelAttribute User user) {
 		userService.insert(user);

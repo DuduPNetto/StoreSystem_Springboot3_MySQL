@@ -35,6 +35,13 @@ public class FrontendProductController {
 		return "allProducts";
 	}
 
+	@GetMapping("/")
+	public String findById(Model model, @RequestParam(value = "id") Long id) {
+		Product product = productService.findById(id);
+		model.addAttribute("product", product);
+		return "findProduct";
+	}
+
 	@PostMapping("/create")
 	public String productCreated(@ModelAttribute Product product) {
 		productService.insert(product);
