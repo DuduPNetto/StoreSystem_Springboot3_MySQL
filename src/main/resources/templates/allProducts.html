@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>All Products</title>
+</head>
+
+<body>
+	<h1>All products</h1>
+	<a th:href="@{/}">Index</a>
+	<a th:href="@{/product/register}">Register product</a>
+
+	<div id="wrapper">
+		<header id="home">
+			<div id="serviceGalery">
+				<div class="products" th:each="product : ${products}">
+					<br>
+					<p th:text="${product.id}"></p>
+					<p th:text="${product.name}"></p>
+					<p th:text="${product.price}"></p>
+					<a th:href="@{/product/update/(id=${product.id})}">Update</a>
+					<a th:href="@{/product/remove/(id=${product.id})}">Remove</a>
+					<br>
+				</div>
+			</div>
+		</header>
+	</div>
+</body>
+
+</html>
