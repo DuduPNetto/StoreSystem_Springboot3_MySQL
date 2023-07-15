@@ -19,11 +19,12 @@ import jakarta.persistence.Table;
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private String description;
 	private double price;
 
 	@OneToMany(mappedBy = "id.product")
@@ -32,9 +33,10 @@ public class Product implements Serializable {
 	public Product() {
 	}
 
-	public Product(Long id, String name, double price) {
+	public Product(Long id, String name, String description, double price) {
 		this.id = id;
 		this.name = name;
+		this.description = description;
 		this.price = price;
 	}
 
@@ -52,6 +54,14 @@ public class Product implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public double getPrice() {

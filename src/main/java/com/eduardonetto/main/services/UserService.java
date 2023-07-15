@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.eduardonetto.main.controllers.dto.UserDTO;
 import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.repositories.UserRepository;
+import com.eduardonetto.main.services.exceptions.DatabaseException;
 import com.eduardonetto.main.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -32,7 +34,11 @@ public class UserService {
 
 	public void delete(Long id) {
 		User user = findById(id);
-		repository.delete(user);
+		try {
+			repository.delete(user);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
 
 	public User update(Long id, User user) {

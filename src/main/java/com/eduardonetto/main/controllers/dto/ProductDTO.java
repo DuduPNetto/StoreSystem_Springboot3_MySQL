@@ -6,6 +6,7 @@ public class ProductDTO {
 
 	private Long id;
 	private String name;
+	private String description;
 	private double price;
 
 	public ProductDTO() {
@@ -14,6 +15,7 @@ public class ProductDTO {
 	public ProductDTO(Product product) {
 		this.id = product.getId();
 		this.name = product.getName();
+		this.description = product.getDescription();
 		this.price = product.getPrice();
 	}
 
@@ -31,6 +33,14 @@ public class ProductDTO {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public double getPrice() {

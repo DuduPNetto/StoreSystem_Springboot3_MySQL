@@ -41,25 +41,29 @@ public class DevConfig implements CommandLineRunner {
 		User user4 = new User(null, "Bob Brown", "bob2@gmail.com", "55 999999999");
 		User user5 = new User(null, "Alex Red", "alex3@gmail.com", "55 999999999");
 
-		Product p1 = new Product(null, "Product 1", 19.90);
-		Product p2 = new Product(null, "Product 2", 29.90);
-		Product p3 = new Product(null, "Product 3", 5.40);
-		Product p4 = new Product(null, "Product 4", 14.70);
-		Product p5 = new Product(null, "Product 5", 39.00);
+		Product p1 = new Product(null, "Product 1", "High quality product", 19.90);
+		Product p2 = new Product(null, "Product 2", "Good for work", 29.90);
+		Product p3 = new Product(null, "Product 3", "Natural", 5.40);
+		Product p4 = new Product(null, "Product 4", "Hand made", 14.70);
+		Product p5 = new Product(null, "Product 5", "Delicious", 39.00);
 
 		Order o1 = new Order(null, user1);
 		Order o2 = new Order(null, user2);
+		Order o3 = new Order(null, user1);
+		Order o4 = new Order(null, user5);
 
 		userRepository.saveAll(Arrays.asList(user1, user2, user3, user4, user5));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
-		orderRepository.saveAll(Arrays.asList(o1, o2));
+		orderRepository.saveAll(Arrays.asList(o1, o2, o3, o4));
 
 		OrderProduct op1 = new OrderProduct(o1, p1, 10, p1.getPrice());
 		OrderProduct op2 = new OrderProduct(o2, p3, 10, p3.getPrice());
 		OrderProduct op3 = new OrderProduct(o1, p5, 10, p5.getPrice());
 		OrderProduct op4 = new OrderProduct(o1, p2, 10, p2.getPrice());
+		OrderProduct op5 = new OrderProduct(o3, p4, 10, p2.getPrice());
+		OrderProduct op6 = new OrderProduct(o2, p1, 10, p2.getPrice());
 
-		orderProductRepository.saveAll(Arrays.asList(op1, op2, op3, op4));
+		orderProductRepository.saveAll(Arrays.asList(op1, op2, op3, op4, op5, op6));
 
 	}
 

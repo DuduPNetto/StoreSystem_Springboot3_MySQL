@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.eduardonetto.main.controllers.dto.ProductDTO;
 import com.eduardonetto.main.entities.Product;
 import com.eduardonetto.main.repositories.ProductRepository;
+import com.eduardonetto.main.services.exceptions.DatabaseException;
 import com.eduardonetto.main.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -32,7 +34,11 @@ public class ProductService {
 
 	public void delete(Long id) {
 		Product product = findById(id);
-		repository.delete(product);
+		try {
+			repository.delete(product);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
 
 	public Product update(Long id, Product product) {
@@ -43,6 +49,7 @@ public class ProductService {
 
 	private void updateProduct(Product entity, Product product) {
 		entity.setName(product.getName());
+		entity.setDescription(product.getDescription());
 		entity.setPrice(product.getPrice());
 	}
 
@@ -50,6 +57,7 @@ public class ProductService {
 		Product product = new Product();
 		product.setId(productDto.getId());
 		product.setName(productDto.getName());
+		product.setDescription(productDto.getDescription());
 		product.setPrice(productDto.getPrice());
 		return product;
 	}
