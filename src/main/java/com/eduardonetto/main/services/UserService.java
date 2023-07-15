@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eduardonetto.main.controllers.dto.UserDTO;
 import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.repositories.UserRepository;
 import com.eduardonetto.main.services.exceptions.ObjectNotFoundException;
@@ -34,16 +35,26 @@ public class UserService {
 		repository.delete(user);
 	}
 
-	public User update(Long id, User user) {
+	public UserDTO update(Long id, User user) {
 		User entity = findById(id);
 		updateUser(entity, user);
-		return repository.save(entity);
+		entity = repository.save(entity);
+		return new UserDTO(entity);
 	}
 
 	private void updateUser(User entity, User user) {
 		entity.setName(user.getName());
 		entity.setEmail(user.getEmail());
 		entity.setPhone(user.getPhone());
+	}
+
+	public User fromDto(UserDTO userDto) {
+		User user = new User();
+		user.setId(userDto.getId());
+		user.setName(userDto.getName());
+		user.setEmail(userDto.getEmail());
+		user.setPhone(userDto.getPhone());
+		return user;
 	}
 
 }
