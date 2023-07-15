@@ -1,5 +1,9 @@
 package com.eduardonetto.main.controllers.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.eduardonetto.main.entities.Order;
 import com.eduardonetto.main.entities.User;
 
 public class UserDTO {
@@ -8,6 +12,7 @@ public class UserDTO {
 	private String name;
 	private String email;
 	private String phone;
+	private List<Order> orders = new ArrayList<>();
 
 	public UserDTO() {
 	}
@@ -17,6 +22,7 @@ public class UserDTO {
 		this.name = user.getName();
 		this.email = user.getEmail();
 		this.phone = user.getPhone();
+		this.orders = user.getOrders();
 	}
 
 	public Long getId() {
@@ -49,6 +55,10 @@ public class UserDTO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
 	}
 
 }

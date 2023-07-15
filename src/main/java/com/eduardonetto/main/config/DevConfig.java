@@ -7,8 +7,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.eduardonetto.main.entities.Order;
+import com.eduardonetto.main.entities.OrderProduct;
 import com.eduardonetto.main.entities.Product;
 import com.eduardonetto.main.entities.User;
+import com.eduardonetto.main.repositories.OrderProductRepository;
+import com.eduardonetto.main.repositories.OrderRepository;
 import com.eduardonetto.main.repositories.ProductRepository;
 import com.eduardonetto.main.repositories.UserRepository;
 
@@ -21,6 +25,12 @@ public class DevConfig implements CommandLineRunner {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private OrderRepository orderRepository;
+
+	@Autowired
+	private OrderProductRepository orderProductRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -37,8 +47,19 @@ public class DevConfig implements CommandLineRunner {
 		Product p4 = new Product(null, "Product 4", 14.70);
 		Product p5 = new Product(null, "Product 5", 39.00);
 
+		Order o1 = new Order(null, user1);
+		Order o2 = new Order(null, user2);
+
 		userRepository.saveAll(Arrays.asList(user1, user2, user3, user4, user5));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		orderRepository.saveAll(Arrays.asList(o1, o2));
+
+		OrderProduct op1 = new OrderProduct(o1, p1, 10, p1.getPrice());
+		OrderProduct op2 = new OrderProduct(o2, p3, 10, p3.getPrice());
+		OrderProduct op3 = new OrderProduct(o1, p5, 10, p5.getPrice());
+		OrderProduct op4 = new OrderProduct(o1, p2, 10, p2.getPrice());
+
+		orderProductRepository.saveAll(Arrays.asList(op1, op2, op3, op4));
 
 	}
 

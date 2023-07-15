@@ -5,37 +5,38 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_product")
-public class Product implements Serializable {
+@Table(name = "tb_order")
+public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
-	private double price;
 
-	@OneToMany(mappedBy = "id.product")
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private User client;
+
+	@OneToMany(mappedBy = "id.order")
 	private Set<OrderProduct> products = new HashSet<>();
 
-	public Product() {
+	public Order() {
 	}
 
-	public Product(Long id, String name, double price) {
+	public Order(Long id, User client) {
 		this.id = id;
-		this.name = name;
-		this.price = price;
+		this.client = client;
 	}
 
 	public Long getId() {
@@ -46,29 +47,16 @@ public class Product implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public User getClient() {
+		return client;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setClient(User client) {
+		this.client = client;
 	}
 
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	@JsonIgnore
-	public Set<Order> getOrders() {
-		Set<Order> set = new HashSet<>();
-		for (OrderProduct product : products) {
-			set.add(product.getOrder());
-		}
-		return set;
+	public Set<OrderProduct> getProducts() {
+		return products;
 	}
 
 	@Override
@@ -84,7 +72,7 @@ public class Product implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Product other = (Product) obj;
+		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
 	}
 
