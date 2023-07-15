@@ -18,13 +18,20 @@
 			<div id="serviceGalery">
 				<div class="users" th:each="user : ${users}">
 					<br>
-					<p th:text="${user.id}"></p>
-					<p th:text="${user.name}"></p>
-					<p th:text="${user.email}"></p>
-					<p th:text="${user.phone}"></p>
+					<p>Id: <b th:text="${user.id}" /></p>
+					<p>Name: <b th:text="${user.name}" /></p>
+					<p>Email: <b th:text="${user.email}" /></p>
+					<p>Phone: <b th:text="${user.phone}" /></p>
+					<div class="orders" th:each="order : ${user.orders}">
+						<br>
+						<p>Orders</p>
+						<p>Id: <b th:text="${order.id}" /></p>
+						<br>
+					</div>
 					<a th:href="@{/user/update/(id=${user.id})}">Update</a>
 					<a th:href="@{/user/remove/(id=${user.id})}">Remove</a>
 					<a th:href="@{/user/(id=${user.id})}">See</a>
+					<br>
 					<br>
 				</div>
 			</div>
