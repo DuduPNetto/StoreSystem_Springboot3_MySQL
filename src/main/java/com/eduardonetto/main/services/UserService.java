@@ -35,11 +35,10 @@ public class UserService {
 		repository.delete(user);
 	}
 
-	public UserDTO update(Long id, User user) {
+	public User update(Long id, User user) {
 		User entity = findById(id);
 		updateUser(entity, user);
-		entity = repository.save(entity);
-		return new UserDTO(entity);
+		return repository.save(entity);
 	}
 
 	private void updateUser(User entity, User user) {
