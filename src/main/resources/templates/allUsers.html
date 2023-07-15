@@ -17,7 +17,8 @@
 		<header id="home">
 			<div id="serviceGalery">
 				<div class="users" th:each="user : ${users}">
-					<p th:value="${user.id}"></p>
+					<br>
+					<p th:text="${user.id}"></p>
 					<p th:text="${user.name}"></p>
 					<p th:text="${user.email}"></p>
 					<p th:text="${user.phone}"></p>
