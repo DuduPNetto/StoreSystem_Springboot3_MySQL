@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.eduardonetto.main.controllers.dto.ProductDTO;
 import com.eduardonetto.main.entities.Product;
 import com.eduardonetto.main.repositories.ProductRepository;
 import com.eduardonetto.main.services.exceptions.ObjectNotFoundException;
@@ -43,6 +44,14 @@ public class ProductService {
 	private void updateProduct(Product entity, Product product) {
 		entity.setName(product.getName());
 		entity.setPrice(product.getPrice());
+	}
+
+	public Product fromDto(ProductDTO productDto) {
+		Product product = new Product();
+		product.setId(productDto.getId());
+		product.setName(productDto.getName());
+		product.setPrice(productDto.getPrice());
+		return product;
 	}
 
 }
