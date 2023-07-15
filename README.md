@@ -2,7 +2,7 @@
 
 Projeto feito para melhorar os conhecimentos aprendidos na linguagem Java.
 
-O projeto possui um sistema CRUD para usuários e produtos, por enquanto.
+O projeto possui um sistema CRUD para usuários, produtos e pedidos.
 
 # Detalhes
 
@@ -21,3 +21,6 @@ http://localhost:8080/backend/dev/users -> Retorna todos os usuários em formato
 http://localhost:8080/backend/dev/users/2 -> Retorna o usuário de ID 2 em formato JSON. <br/>
 http://localhost:8080/backend/dev/products -> Retorna todos os produtos em formato JSON. <br/>
 http://localhost:8080/backend/dev/products/2 -> Retorna o produto de ID 2 em formato JSON. <br/>
+
+Para o cadastro de pedidos, é necessário informar um usuário, e em seguida, inserir items neste pedido, informando o id do pedido e o id do produto que deseja adicionar. <br/>
+Após isso, o pedido completo será mostrado nas informações do usuário.
