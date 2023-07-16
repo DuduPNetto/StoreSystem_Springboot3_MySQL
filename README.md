@@ -19,7 +19,7 @@ http://localhost:8080/product/?id=2 -> Retorna o produto de id 2, com links para
 Endereços com dados JSON: <br/>
 http://localhost:8080/backend/dev/users -> Retorna todos os usuários em formato JSON. <br/>
 http://localhost:8080/backend/dev/users/2 -> Retorna o usuário de ID 2 em formato JSON. <br/>
-http://localhost:8080/backend/dev/users/search/?email=alex@email.com -> Retorna todos os usuários com este email. <br/>
+http://localhost:8080/backend/dev/users/search/?email=email@email.com -> Retorna todos os usuários com este email. <br/>
 http://localhost:8080/backend/dev/products -> Retorna todos os produtos em formato JSON. <br/>
 http://localhost:8080/backend/dev/products/2 -> Retorna o produto de ID 2 em formato JSON. <br/>
 
