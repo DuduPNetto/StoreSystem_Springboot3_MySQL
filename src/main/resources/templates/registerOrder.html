@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Register</title>
+</head>
+
+<body>
+	<h1>Register order</h1>
+	<a th:href="@{/}">Index</a>
+
+	<form th:action="@{/order/create}" th:object="${order}" method="post">
+		<div>
+			<label th:for="client.name">Client Name:</label>
+			<input type="text" th:field="*{client.name}" placeholder="Client Name" required="required">
+		</div>
+		<div>
+			<label th:for="client.email">Client Email:</label>
+			<input type="text" th:field="*{client.email}" placeholder="Client Email" required="required">
+		</div>
+		<div>
+			<label th:for="client.phone">Client Phone:</label>
+			<input type="text" th:field="*{client.phone}" placeholder="Client Phone" required="required">
+		</div>
+		<div>
+			<button type="submit">Send</button>
+		</div>
+	</form>
+</body>
+
+</html>

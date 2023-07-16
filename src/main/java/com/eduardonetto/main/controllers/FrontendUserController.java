@@ -16,6 +16,7 @@ import com.eduardonetto.main.controllers.query.Search;
 import com.eduardonetto.main.controllers.util.URL;
 import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.services.UserService;
+import com.eduardonetto.main.services.exceptions.DatabaseException;
 
 @Controller
 @RequestMapping("/user/")
@@ -47,6 +48,12 @@ public class FrontendUserController {
 
 	@PostMapping("/create")
 	public String userCreated(@ModelAttribute User user) {
+		List<User> list = userService.findAll();
+		for (User u : list) {
+			if (u.equals(user)) {
+				throw new DatabaseException("Object already exists");
+			}
+		}
 		userService.insert(user);
 		return "userChanged";
 	}

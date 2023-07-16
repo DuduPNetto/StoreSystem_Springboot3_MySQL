@@ -39,7 +39,7 @@ public class DevConfig implements CommandLineRunner {
 		User user2 = new User(null, "Bob Grey", "bob@gmail.com", "55 999999999");
 		User user3 = new User(null, "Alex Blue", "alex2@gmail.com", "55 999999999");
 		User user4 = new User(null, "Bob Brown", "bob2@gmail.com", "55 999999999");
-		User user5 = new User(null, "Alex Red", "alex3@gmail.com", "55 999999999");
+		User user5 = new User(null, "Alex Red", "alex@gmail.com", "55 999999999");
 
 		Product p1 = new Product(null, "Product 1", "High quality product", 19.90);
 		Product p2 = new Product(null, "Product 2", "Good for work", 29.90);

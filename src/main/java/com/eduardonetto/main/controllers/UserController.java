@@ -21,6 +21,7 @@ import com.eduardonetto.main.controllers.dto.UserDTO;
 import com.eduardonetto.main.controllers.util.URL;
 import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.services.UserService;
+import com.eduardonetto.main.services.exceptions.DatabaseException;
 
 @RestController
 @RequestMapping(value = "/backend/dev/users")
@@ -43,7 +44,14 @@ public class UserController {
 
 	@PostMapping
 	public ResponseEntity<UserDTO> insert(@RequestBody UserDTO userDto) {
-		User user = service.insert(service.fromDto(userDto));
+		List<User> list = service.findAll();
+		User user = service.fromDto(userDto);
+		for (User u : list) {
+			if (u.equals(user)) {
+				throw new DatabaseException("Object already exists");
+			}
+		}
+		service.insert(user);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
 		return ResponseEntity.created(uri).body(new UserDTO(user));
 	}

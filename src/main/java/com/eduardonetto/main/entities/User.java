@@ -80,7 +80,7 @@ public class User implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(email, name);
 	}
 
 	@Override
@@ -92,7 +92,8 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(email.toLowerCase(), other.email.toLowerCase())
+				&& Objects.equals(name.toLowerCase(), other.name.toLowerCase());
 	}
 
 }
