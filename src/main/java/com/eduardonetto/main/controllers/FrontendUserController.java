@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.eduardonetto.main.controllers.query.Search;
+import com.eduardonetto.main.controllers.util.URL;
 import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.services.UserService;
 
@@ -71,7 +72,8 @@ public class FrontendUserController {
 
 	@PostMapping("/search_email/")
 	public String searchByEmail(Model model, @ModelAttribute Search search) {
-		List<User> users = userService.findByEmail(search.getContent().trim());
+		String content = URL.decodeParam(search.getContent());
+		List<User> users = userService.findByEmail(content);
 		model.addAttribute("users", users);
 		return "allUsers";
 	}

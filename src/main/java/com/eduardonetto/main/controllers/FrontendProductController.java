@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.eduardonetto.main.controllers.query.Search;
+import com.eduardonetto.main.controllers.util.URL;
 import com.eduardonetto.main.entities.Product;
 import com.eduardonetto.main.services.ProductService;
 
@@ -32,6 +34,7 @@ public class FrontendProductController {
 	public String allProducts(Model model) {
 		List<Product> products = productService.findAll();
 		model.addAttribute("products", products);
+		model.addAttribute("search", new Search());
 		return "allProducts";
 	}
 
@@ -65,6 +68,14 @@ public class FrontendProductController {
 	public RedirectView removeProduct(Model model, @RequestParam(value = "id") Long id) {
 		productService.delete(id);
 		return new RedirectView("/product/all");
+	}
+
+	@PostMapping("/search_name/")
+	public String searchByName(Model model, @ModelAttribute Search search) {
+		String content = URL.decodeParam(search.getContent());
+		List<Product> products = productService.findByName(content);
+		model.addAttribute("products", products);
+		return "allProducts";
 	}
 
 }
