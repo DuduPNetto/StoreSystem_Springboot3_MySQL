@@ -10,19 +10,25 @@
 
 <body>
 	<h1>Menu</h1>
-	<div id="wrapper">
-		<header id="home">
-			<div id="links">
-				<a th:href="@{/}">Index</a>
-				<br>
-				<a th:href="@{/user/register}">Register User</a>
-				<a th:href="@{/user/all}">Users</a>
-				<br>
-				<a th:href="@{/product/register}">Register Product</a>
-				<a th:href="@{/product/all}">Products</a>
-			</div>
-		</header>
-	</div>
+	<header id="home">
+		<div id="links">
+			<a th:href="@{/}">Index</a>
+			<br>
+			<a th:href="@{/user/register}">Register User</a>
+			<a th:href="@{/user/all}">Users</a>
+			<br>
+			<a th:href="@{/product/register}">Register Product</a>
+			<a th:href="@{/product/all}">Products</a>
+			<br>
+			<a th:href="@{/order/register}">Register Order</a>
+			<a th:href="@{/order/}">Orders</a>
+		</div>
+	</header>
+	<section class="orders">
+		<div th:each="order : ${orders}">
+			<h1>Order</h1>
+		</div>
+	</section>
 </body>
 
 </html>
