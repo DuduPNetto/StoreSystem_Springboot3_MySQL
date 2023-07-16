@@ -61,5 +61,9 @@ public class ProductService {
 		product.setPrice(productDto.getPrice());
 		return product;
 	}
+	
+	public List<Product> findByName(String name) {
+		return repository.findProductByName(name);
+	}
 
 }

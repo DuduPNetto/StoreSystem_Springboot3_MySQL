@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.eduardonetto.main.controllers.dto.ProductDTO;
+import com.eduardonetto.main.controllers.util.URL;
 import com.eduardonetto.main.entities.Product;
 import com.eduardonetto.main.services.ProductService;
 
@@ -57,6 +59,13 @@ public class ProductController {
 	public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody ProductDTO productDto) {
 		Product product = service.update(id, service.fromDto(productDto));
 		return ResponseEntity.ok().body(product);
+	}
+
+	@GetMapping("/search/")
+	public ResponseEntity<List<Product>> findByName(@RequestParam(name = "name", defaultValue = "") String name) {
+		String search = URL.decodeParam(name);
+		List<Product> products = service.findByName(search);
+		return ResponseEntity.ok().body(products);
 	}
 
 }

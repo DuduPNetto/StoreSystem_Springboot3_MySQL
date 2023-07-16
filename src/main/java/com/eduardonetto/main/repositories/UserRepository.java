@@ -10,6 +10,6 @@ import com.eduardonetto.main.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Query("SELECT u FROM User u WHERE u.email = ?1")
-	List<User> searchByEmail(String email);
+	List<User> findUserByEmail(String email);
 	
 }

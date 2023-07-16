@@ -63,7 +63,7 @@ public class UserService {
 	}
 
 	public List<User> findByEmail(String email) {
-		return repository.searchByEmail(email);
+		return repository.findUserByEmail(email);
 	}
 
 }
