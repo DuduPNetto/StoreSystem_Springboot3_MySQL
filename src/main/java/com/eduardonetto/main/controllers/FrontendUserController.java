@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.eduardonetto.main.controllers.query.Search;
 import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.services.UserService;
 
@@ -32,6 +33,7 @@ public class FrontendUserController {
 	public String allUsers(Model model) {
 		List<User> users = userService.findAll();
 		model.addAttribute("users", users);
+		model.addAttribute("search", new Search());
 		return "allUsers";
 	}
 
@@ -65,6 +67,13 @@ public class FrontendUserController {
 	public RedirectView removeUser(Model model, @RequestParam(value = "id") Long id) {
 		userService.delete(id);
 		return new RedirectView("/user/all");
+	}
+
+	@PostMapping("/search_email/")
+	public String searchByEmail(Model model, @ModelAttribute Search search) {
+		List<User> users = userService.findByEmail(search.getContent().trim());
+		model.addAttribute("users", users);
+		return "allUsers";
 	}
 
 }

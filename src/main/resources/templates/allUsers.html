@@ -32,6 +32,15 @@
 
 <body>
 	<h1>All users</h1>
+	<form th:action="@{/user/search_email/}" th:object="${search}" method="post">
+		<div>
+			<label th:for="search">Search:</label>
+			<input type="text" th:field="*{content}" placeholder="Search" required="required">
+		</div>
+		<div>
+			<button type="submit">Send</button>
+		</div>
+	</form>
 	<a th:href="@{/}">Index</a>
 	<a th:href="@{/user/register}">Register user</a>
 
