@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.eduardonetto.main.controllers.dto.OrderDTO;
 import com.eduardonetto.main.entities.Order;
+import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.repositories.OrderRepository;
+import com.eduardonetto.main.services.exceptions.DatabaseException;
 import com.eduardonetto.main.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -31,17 +35,27 @@ public class OrderService {
 
 	public void delete(Long id) {
 		Order order = findById(id);
-		repository.delete(order);
+		try {
+			repository.delete(order);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
 
-	public Order update(Long id, Order order) {
+	public Order update(Long id, User client) {
 		Order entity = findById(id);
-		updateOrder(entity, order);
+		updateOrder(entity, client);
 		return repository.save(entity);
 	}
 
-	private void updateOrder(Order entity, Order order) {
-		entity.setClient(order.getClient());
+	private void updateOrder(Order entity, User client) {
+		entity.setClient(client);
+	}
+
+	public Order fromDto(OrderDTO orderDto) {
+		Order order = new Order();
+		order.setClient(orderDto.getClient());
+		return order;
 	}
 
 }
