@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.eduardonetto.main.controllers.dto.UserDTO;
+import com.eduardonetto.main.controllers.util.URL;
 import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.services.UserService;
 
@@ -56,6 +58,13 @@ public class UserController {
 	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody UserDTO userDto) {
 		User user = service.update(id, service.fromDto(userDto));
 		return ResponseEntity.ok().body(user);
+	}
+
+	@GetMapping("/search/")
+	public ResponseEntity<List<User>> findByEmail(@RequestParam(value = "email", defaultValue = "") String search) {
+		search = URL.decodeParam(search);
+		List<User> users = service.findByEmail(search);
+		return ResponseEntity.ok().body(users);
 	}
 
 }

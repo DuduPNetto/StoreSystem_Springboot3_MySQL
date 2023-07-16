@@ -62,4 +62,8 @@ public class UserService {
 		return user;
 	}
 
+	public List<User> findByEmail(String email) {
+		return repository.searchByEmail(email);
+	}
+
 }
