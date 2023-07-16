@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.eduardonetto.main.entities.Order;
+import com.eduardonetto.main.entities.OrderProduct;
 import com.eduardonetto.main.entities.User;
+import com.eduardonetto.main.repositories.OrderProductRepository;
 import com.eduardonetto.main.services.OrderService;
+import com.eduardonetto.main.services.ProductService;
 import com.eduardonetto.main.services.UserService;
 import com.eduardonetto.main.services.exceptions.ObjectNotFoundException;
 
@@ -27,6 +30,12 @@ public class FrontendOrderController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private OrderProductRepository repository;
 
 	@GetMapping
 	public String orders(Model model) {
@@ -58,6 +67,16 @@ public class FrontendOrderController {
 			throw new ObjectNotFoundException("Object not found with [name=" + order.getClient().getName() + ", email="
 					+ order.getClient().getEmail());
 		}
+		return new RedirectView("/order/");
+	}
+
+	@GetMapping("/remove/")
+	public RedirectView removeOrderProduct(Model model, @RequestParam(value = "id") Long id,
+			@RequestParam(value = "oid") Long oid) {
+		Order order = orderService.findById(oid);
+		OrderProduct op = new OrderProduct(order, productService.findById(id), null, null);
+		order.getProducts().remove(op);
+		repository.delete(op);
 		return new RedirectView("/order/");
 	}
 

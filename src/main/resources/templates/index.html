@@ -36,6 +36,7 @@
 				<p>Name: <b th:text="${product.getProduct().name}"></b></p>
 				<p>Description: <b th:text="${product.getProduct().description}"></b></p>
 				<p>Price: <b th:text="${product.getProduct().price}"></b></p>
+				<a th:href="@{/order/remove/(id=${product.getProduct().id},oid=${order.id})}">Remove Product</a>
 			</div>
 			<a th:href="@{/order/find/(id=${order.id})}">See</a>
 		</div>
