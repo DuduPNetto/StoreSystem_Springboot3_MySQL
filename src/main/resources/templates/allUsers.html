@@ -61,6 +61,7 @@
 								<div th:each="product : ${order.products}">
 									<p>Id: <b th:text="${product.getProduct().id}"></b></p>
 									<p>Name: <b th:text="${product.getProduct().name}"></b></p>
+									<p>Quantity: <b th:text="${product.getQuantity()}"></b></p>
 								</div>
 							</div>
 						</div>

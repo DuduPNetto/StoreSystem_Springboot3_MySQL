@@ -57,11 +57,11 @@ public class DevConfig implements CommandLineRunner {
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 
 		OrderProduct op1 = new OrderProduct(o1, p1, 10, p1.getPrice());
-		OrderProduct op2 = new OrderProduct(o2, p3, 10, p3.getPrice());
-		OrderProduct op3 = new OrderProduct(o1, p5, 10, p5.getPrice());
-		OrderProduct op4 = new OrderProduct(o1, p2, 10, p2.getPrice());
-		OrderProduct op5 = new OrderProduct(o3, p4, 10, p2.getPrice());
-		OrderProduct op6 = new OrderProduct(o2, p1, 10, p2.getPrice());
+		OrderProduct op2 = new OrderProduct(o2, p3, 4, p3.getPrice());
+		OrderProduct op3 = new OrderProduct(o1, p5, 6, p5.getPrice());
+		OrderProduct op4 = new OrderProduct(o1, p2, 2, p2.getPrice());
+		OrderProduct op5 = new OrderProduct(o3, p4, 1, p2.getPrice());
+		OrderProduct op6 = new OrderProduct(o2, p1, 7, p2.getPrice());
 
 		orderProductRepository.saveAll(Arrays.asList(op1, op2, op3, op4, op5, op6));
 

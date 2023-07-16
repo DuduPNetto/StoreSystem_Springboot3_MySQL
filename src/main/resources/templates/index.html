@@ -36,8 +36,23 @@
 				<p>Name: <b th:text="${product.getProduct().name}"></b></p>
 				<p>Description: <b th:text="${product.getProduct().description}"></b></p>
 				<p>Price: <b th:text="${product.getProduct().price}"></b></p>
+				<p>Quantity: <b th:text="${product.getQuantity()}"></b></p>
 				<a th:href="@{/order/remove/(id=${product.getProduct().id},oid=${order.id})}">Remove Product</a>
 			</div>
+			<form th:action="@{/order/add/(id=${order.id})}" th:object="${productToAdd}" method="post">
+				<h1>Add product</h1>
+				<div>
+					<label th:for="productId">Product Id:</label>
+					<input type="text" th:field="*{productId}" placeholder="Product Id" required="required">
+				</div>
+				<div>
+					<label th:for="quantity">Product quantity:</label>
+					<input type="text" th:field="*{quantity}" placeholder="Quantity" required="required">
+				</div>
+				<div>
+					<button type="submit">Send</button>
+				</div>
+			</form>
 			<a th:href="@{/order/find/(id=${order.id})}">See</a>
 		</div>
 	</section>

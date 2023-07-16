@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.eduardonetto.main.controllers.query.ProductToAdd;
 import com.eduardonetto.main.entities.Order;
 import com.eduardonetto.main.entities.OrderProduct;
+import com.eduardonetto.main.entities.Product;
 import com.eduardonetto.main.entities.User;
-import com.eduardonetto.main.repositories.OrderProductRepository;
+import com.eduardonetto.main.services.OrderProductService;
 import com.eduardonetto.main.services.OrderService;
 import com.eduardonetto.main.services.ProductService;
 import com.eduardonetto.main.services.UserService;
@@ -33,14 +35,15 @@ public class FrontendOrderController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
-	private OrderProductRepository repository;
+	private OrderProductService orderProductService;
 
 	@GetMapping
 	public String orders(Model model) {
 		List<Order> orders = orderService.findAll();
 		model.addAttribute("orders", orders);
+		model.addAttribute("productToAdd", new ProductToAdd());
 		return "index";
 	}
 
@@ -76,7 +79,21 @@ public class FrontendOrderController {
 		Order order = orderService.findById(oid);
 		OrderProduct op = new OrderProduct(order, productService.findById(id), null, null);
 		order.getProducts().remove(op);
-		repository.delete(op);
+		orderProductService.delete(op);
+		return new RedirectView("/order/");
+	}
+
+	@PostMapping("/add/")
+	public RedirectView addOrderProduct(Model model, @RequestParam(value = "id") Long id,
+			@ModelAttribute ProductToAdd productToAdd) {
+		try {
+			Order order = orderService.findById(id);
+			Product product = productService.findById(Long.parseLong(productToAdd.getProductId()));
+			OrderProduct orderProduct = new OrderProduct(order, product, productToAdd.getQuantity(), product.getPrice());
+			orderProductService.insert(orderProduct);
+		} catch (NumberFormatException e) {
+			throw new ObjectNotFoundException("Invalid Product ID. id=" + id);
+		}
 		return new RedirectView("/order/");
 	}
 
