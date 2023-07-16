@@ -6,6 +6,28 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>User</title>
+	<style>
+		.users {
+			margin: 10px 0;
+			padding: 5px 10px;
+			background-color: rgb(128, 128, 255);
+		}
+
+		.orders {
+			background-color: darkgrey;
+			padding: 10px;
+		}
+
+		.products {
+			padding: 10px;
+			background-color: aqua;
+		}
+
+		.user-links {
+			padding: 10px;
+			background-color: lightgrey;
+		}
+	</style>
 </head>
 
 <body>
@@ -17,16 +39,29 @@
 	<div id="wrapper">
 		<header id="home">
 			<div id="serviceGalery">
-				<div class="user">
-					<br>
-					<p th:text="${user.id}"></p>
-					<p th:text="${user.name}"></p>
-					<p th:text="${user.email}"></p>
-					<p th:text="${user.phone}"></p>
-					<a th:href="@{/user/update/(id=${user.id})}">Update</a>
-					<a th:href="@{/user/remove/(id=${user.id})}">Remove</a>
-					<br>
-				</div>
+				<section class="users">
+					<p>Id: <b th:text="${user.id}"></b></p>
+					<p>Name: <b th:text="${user.name}"></b></p>
+					<p>Email: <b th:text="${user.email}"></b></p>
+					<p>Phone: <b th:text="${user.phone}"></b></p>
+					<section class="orders">
+						<p>Orders</p>
+						<div th:each="order : ${user.orders}">
+							<p>Id: <b th:text="${order.id}" /></p>
+							<div class="products">
+								<p>Products</p>
+								<div th:each="product : ${order.products}">
+									<p>Id: <b th:text="${product.getProduct().id}"></b></p>
+									<p>Name: <b th:text="${product.getProduct().name}"></b></p>
+								</div>
+							</div>
+						</div>
+					</section>
+					<div class="user-links">
+						<a th:href="@{/user/update/(id=${user.id})}">Update</a>
+						<a th:href="@{/user/remove/(id=${user.id})}">Remove</a>
+					</div>
+				</section>
 			</div>
 		</header>
 	</div>

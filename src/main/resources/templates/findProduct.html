@@ -6,10 +6,22 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Product</title>
+	<style>
+		.products {
+			margin: 5px 10px;
+			padding: 10px;
+			background-color: aqua;
+		}
+
+		.product-links {
+			padding: 10px;
+			background-color: lightgrey;
+		}
+	</style>
 </head>
 
 <body>
-	<h1>User</h1>
+	<h1>Product</h1>
 	<a th:href="@{/}">Index</a>
 	<a th:href="@{/product/all}">All products</a>
 	<a th:href="@{/product/register}">Register product</a>
@@ -17,15 +29,16 @@
 	<div id="wrapper">
 		<header id="home">
 			<div id="serviceGalery">
-				<div class="product">
-					<br>
-					<p th:text="${product.id}"></p>
-					<p th:text="${product.name}"></p>
-					<p th:text="${product.price}"></p>
-					<a th:href="@{/product/update/(id=${product.id})}">Update</a>
-					<a th:href="@{/product/remove/(id=${product.id})}">Remove</a>
-					<br>
-				</div>
+				<section class="products">
+					<p>Id: <b th:text="${product.id}"></b></p>
+					<p>Name: <b th:text="${product.name}"></b></p>
+					<p>Description <b th:text="${product.description}"></b></p>
+					<p>Price: <b th:text="${product.price}"></b></p>
+					<div class="product-links">
+						<a th:href="@{/product/update/(id=${product.id})}">Update</a>
+						<a th:href="@{/product/remove/(id=${product.id})}">Remove</a>
+					</div>
+				</section>
 			</div>
 		</header>
 	</div>
