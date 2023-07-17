@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.eduardonetto.main.controllers.query.Search;
 import com.eduardonetto.main.controllers.util.URL;
 import com.eduardonetto.main.entities.User;
+import com.eduardonetto.main.security.TokenService;
 import com.eduardonetto.main.services.UserService;
 import com.eduardonetto.main.services.exceptions.DatabaseException;
 
@@ -25,35 +26,41 @@ public class FrontendUserController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private TokenService tokenService;
+
 	@GetMapping("/register/")
 	public String registerUser(Model model, @RequestParam(value = "token") String token) {
-		if (!token.trim().equals("")) {
-			model.addAttribute("user", new User());
-			return "registerUser";
-		}
-		throw new DatabaseException("You are not logged");
+		tokenService.validateToken(token);
+		model.addAttribute("user", new User());
+		model.addAttribute("tokenValue", token);
+		return "registerUser";
 	}
 
 	@GetMapping("/all/")
 	public String allUsers(Model model, @RequestParam(value = "token") String token) {
-		if (!token.trim().equals("")) {
-			List<User> users = userService.findAll();
-			model.addAttribute("users", users);
-			model.addAttribute("search", new Search());
-			return "allUsers";
-		}
-		throw new DatabaseException("You are not logged");
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
+		List<User> users = userService.findAll();
+		model.addAttribute("users", users);
+		model.addAttribute("search", new Search());
+		return "allUsers";
 	}
 
 	@GetMapping("/")
-	public String findById(Model model, @RequestParam(value = "id") Long id) {
+	public String findById(Model model, @RequestParam(value = "id") Long id,
+			@RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		User user = userService.findById(id);
 		model.addAttribute("user", user);
 		return "findUser";
 	}
 
 	@PostMapping("/create/")
-	public String userCreated(@ModelAttribute User user) {
+	public String userCreated(Model model, @ModelAttribute User user, @RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		List<User> list = userService.findAll();
 		for (User u : list) {
 			if (u.equals(user)) {
@@ -65,26 +72,37 @@ public class FrontendUserController {
 	}
 
 	@GetMapping("/update/")
-	public String updateUser(Model model, @RequestParam(value = "id") Long id) {
+	public String updateUser(Model model, @RequestParam(value = "id") Long id,
+			@RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		User user = userService.findById(id);
 		model.addAttribute("user", user);
 		return "updateUser";
 	}
 
 	@PostMapping("/update/")
-	public String userUpdate(@ModelAttribute User user) {
+	public String userUpdate(Model model, @ModelAttribute User user, @RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		userService.update(user.getId(), user);
 		return "userChanged";
 	}
 
 	@GetMapping("/remove/")
-	public RedirectView removeUser(Model model, @RequestParam(value = "id") Long id) {
+	public RedirectView removeUser(Model model, @RequestParam(value = "id") Long id,
+			@RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		userService.delete(id);
-		return new RedirectView("/user/all/");
+		return new RedirectView("/user/all/" + "?token=" + token);
 	}
 
 	@PostMapping("/search_email/")
-	public String searchByEmail(Model model, @ModelAttribute Search search) {
+	public String searchByEmail(Model model, @ModelAttribute Search search,
+			@RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		String content = URL.decodeParam(search.getContent());
 		List<User> users = userService.findByEmail(content);
 		model.addAttribute("users", users);
