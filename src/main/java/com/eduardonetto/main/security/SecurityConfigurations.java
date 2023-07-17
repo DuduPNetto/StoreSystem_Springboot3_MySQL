@@ -26,8 +26,17 @@ public class SecurityConfigurations {
 		return httpSecurity.csrf(csrf -> csrf.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 						.requestMatchers(HttpMethod.GET, "/").permitAll()
+						.requestMatchers(HttpMethod.POST, "/login").permitAll()
+						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+						.requestMatchers(HttpMethod.GET, "/user/all/").permitAll()
+						.requestMatchers(HttpMethod.POST, "/user/search_email/").permitAll()
+						.requestMatchers(HttpMethod.GET, "/user/remove/").permitAll()
+						.requestMatchers(HttpMethod.GET, "/user/register/").permitAll()
+						.requestMatchers(HttpMethod.GET, "/user/").permitAll()
+						.requestMatchers(HttpMethod.POST, "/user/create/").permitAll()
+						.requestMatchers(HttpMethod.GET, "/user/update/").permitAll()
+						.requestMatchers(HttpMethod.POST, "/user/update/").permitAll()
 						.anyRequest().hasRole("ADMIN"))
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}

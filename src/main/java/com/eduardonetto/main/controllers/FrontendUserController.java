@@ -25,18 +25,24 @@ public class FrontendUserController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/register")
-	public String registerUser(Model model) {
-		model.addAttribute("user", new User());
-		return "registerUser";
+	@GetMapping("/register/")
+	public String registerUser(Model model, @RequestParam(value = "token") String token) {
+		if (!token.trim().equals("")) {
+			model.addAttribute("user", new User());
+			return "registerUser";
+		}
+		throw new DatabaseException("You are not logged");
 	}
 
-	@GetMapping("/all")
-	public String allUsers(Model model) {
-		List<User> users = userService.findAll();
-		model.addAttribute("users", users);
-		model.addAttribute("search", new Search());
-		return "allUsers";
+	@GetMapping("/all/")
+	public String allUsers(Model model, @RequestParam(value = "token") String token) {
+		if (!token.trim().equals("")) {
+			List<User> users = userService.findAll();
+			model.addAttribute("users", users);
+			model.addAttribute("search", new Search());
+			return "allUsers";
+		}
+		throw new DatabaseException("You are not logged");
 	}
 
 	@GetMapping("/")
@@ -46,7 +52,7 @@ public class FrontendUserController {
 		return "findUser";
 	}
 
-	@PostMapping("/create")
+	@PostMapping("/create/")
 	public String userCreated(@ModelAttribute User user) {
 		List<User> list = userService.findAll();
 		for (User u : list) {
@@ -65,7 +71,7 @@ public class FrontendUserController {
 		return "updateUser";
 	}
 
-	@PostMapping("/update")
+	@PostMapping("/update/")
 	public String userUpdate(@ModelAttribute User user) {
 		userService.update(user.getId(), user);
 		return "userChanged";
@@ -74,7 +80,7 @@ public class FrontendUserController {
 	@GetMapping("/remove/")
 	public RedirectView removeUser(Model model, @RequestParam(value = "id") Long id) {
 		userService.delete(id);
-		return new RedirectView("/user/all");
+		return new RedirectView("/user/all/");
 	}
 
 	@PostMapping("/search_email/")
