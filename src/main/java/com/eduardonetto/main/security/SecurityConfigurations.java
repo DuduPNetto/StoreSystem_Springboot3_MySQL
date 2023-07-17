@@ -25,9 +25,9 @@ public class SecurityConfigurations {
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		return httpSecurity.csrf(csrf -> csrf.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(auth -> auth
-						.requestMatchers(HttpMethod.GET, "/").permitAll()
+				.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/").permitAll()
 						.requestMatchers(HttpMethod.POST, "/login").permitAll()
+						.requestMatchers(HttpMethod.GET, "/logout/").permitAll()
 						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 						.requestMatchers(HttpMethod.GET, "/user/all/").permitAll()
 						.requestMatchers(HttpMethod.POST, "/user/search_email/").permitAll()
@@ -37,8 +37,7 @@ public class SecurityConfigurations {
 						.requestMatchers(HttpMethod.POST, "/user/create/").permitAll()
 						.requestMatchers(HttpMethod.GET, "/user/update/").permitAll()
 						.requestMatchers(HttpMethod.POST, "/user/update/").permitAll()
-						.requestMatchers(HttpMethod.GET, "/user/update/").permitAll()
-						.anyRequest().hasRole("ADMIN"))
+						.requestMatchers(HttpMethod.GET, "/user/update/").permitAll().anyRequest().hasRole("ADMIN"))
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}
 

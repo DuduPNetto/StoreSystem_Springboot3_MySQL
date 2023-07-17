@@ -10,9 +10,9 @@
 
 <body>
 	<h1>Register user</h1>
-	<a th:href="@{/}">Index</a>
+	<a th:href="@{/(token=${tokenValue})}">Index</a>
 
-	<form th:action="@{/user/create}" th:object="${user}" method="post">
+	<form th:action="@{/user/create/(token=${tokenValue})}" th:object="${user}" method="post">
 		<div>
 			<label th:for="name">Name:</label>
 			<input type="text" th:field="*{name}" placeholder="Name" required="required">

@@ -9,9 +9,9 @@
 
 <body>
 	<h1>User data: </h1>
-	<a th:href="@{/}">Index</a>
+	<a th:href="@{/(token=${tokenValue})}">Index</a>
 
-	<form th:action="@{/user/update}" th:object="${user}" method="post">
+	<form th:action="@{/user/update/(token=${tokenValue})}" th:object="${user}" method="post">
 		<div>
 			<label th:for="id">Id:</label>
 			<input type="text" th:field="*{id}" placeholder="Id" readonly>

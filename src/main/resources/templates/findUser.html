@@ -32,9 +32,9 @@
 
 <body>
 	<h1>User</h1>
-	<a th:href="@{/}">Index</a>
-	<a th:href="@{/user/all}">All users</a>
-	<a th:href="@{/user/register}">Register user</a>
+	<a th:href="@{/(token=${tokenValue})}">Index</a>
+	<a th:href="@{/user/all/(token=${tokenValue})}">All users</a>
+	<a th:href="@{/user/register/(token=${tokenValue})}">Register user</a>
 
 	<div id="wrapper">
 		<header id="home">
@@ -58,8 +58,8 @@
 						</div>
 					</section>
 					<div class="user-links">
-						<a th:href="@{/user/update/(id=${user.id})}">Update</a>
-						<a th:href="@{/user/remove/(id=${user.id})}">Remove</a>
+						<a th:href="@{/user/update/(id=${user.id},token=${tokenValue})}">Update</a>
+						<a th:href="@{/user/remove/(id=${user.id},token=${tokenValue})}">Remove</a>
 					</div>
 				</section>
 			</div>

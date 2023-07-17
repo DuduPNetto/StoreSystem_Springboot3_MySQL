@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.eduardonetto.main.controllers.query.Token;
 import com.eduardonetto.main.security.TokenService;
@@ -28,7 +29,7 @@ public class FrontendIndexController {
 			service.validateToken(token);
 			model.addAttribute("tokenValue", token);
 		}
-		return "index";
+		return "index";	
 	}
 
 	@PostMapping("/login")
@@ -36,6 +37,14 @@ public class FrontendIndexController {
 		service.validateToken(token.getContent());
 		model.addAttribute("tokenValue", token.getContent());
 		return "index";
+	}
+
+	@GetMapping("/logout/")
+	public RedirectView logout(Model model) {
+		if (model.getAttribute("tokenValue") != null) {
+			model.addAttribute("tokenValue", "");
+		}
+		return new RedirectView("/");
 	}
 
 }

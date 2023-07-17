@@ -32,7 +32,7 @@
 
 <body>
 	<h1>All users</h1>
-	<form th:action="@{/user/search_email/}" th:object="${search}" method="post">
+	<form th:action="@{/user/search_email/(token=${tokenValue})}" th:object="${search}" method="post">
 		<div>
 			<label th:for="search">Search:</label>
 			<input type="text" th:field="*{content}" placeholder="Search" required="required">
@@ -41,8 +41,8 @@
 			<button type="submit">Send</button>
 		</div>
 	</form>
-	<a th:href="@{/}">Index</a>
-	<a th:href="@{/user/register}">Register user</a>
+	<a th:href="@{/(token=${tokenValue})}">Index</a>
+	<a th:href="@{/user/register/(token=${tokenValue})}">Register user</a>
 
 	<div id="wrapper">
 		<header id="home">
@@ -67,9 +67,9 @@
 						</div>
 					</section>
 					<div class="user-links">
-						<a th:href="@{/user/update/(id=${user.id})}">Update</a>
-						<a th:href="@{/user/remove/(id=${user.id})}">Remove</a>
-						<a th:href="@{/user/(id=${user.id})}">See</a>						
+						<a th:href="@{/user/update/(id=${user.id},token=${tokenValue})}">Update</a>
+						<a th:href="@{/user/remove/(id=${user.id},token=${tokenValue})}">Remove</a>
+						<a th:href="@{/user/(id=${user.id},token=${tokenValue})}">See</a>						
 					</div>
 				</section>
 			</div>
