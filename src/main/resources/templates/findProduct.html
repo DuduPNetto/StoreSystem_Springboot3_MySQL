@@ -22,9 +22,9 @@
 
 <body>
 	<h1>Product</h1>
-	<a th:href="@{/}">Index</a>
-	<a th:href="@{/product/all}">All products</a>
-	<a th:href="@{/product/register}">Register product</a>
+	<a th:href="@{/(token=${tokenValue})}">Index</a>
+	<a th:href="@{/product/all/(token=${tokenValue})}">All products</a>
+	<a th:href="@{/product/register/(token=${tokenValue})}">Register product</a>
 
 	<div id="wrapper">
 		<header id="home">
@@ -35,8 +35,8 @@
 					<p>Description <b th:text="${product.description}"></b></p>
 					<p>Price: <b th:text="${product.price}"></b></p>
 					<div class="product-links">
-						<a th:href="@{/product/update/(id=${product.id})}">Update</a>
-						<a th:href="@{/product/remove/(id=${product.id})}">Remove</a>
+						<a th:href="@{/product/update/(id=${product.id},token=${tokenValue})}">Update</a>
+						<a th:href="@{/product/remove/(id=${product.id},token=${tokenValue})}">Remove</a>
 					</div>
 				</section>
 			</div>

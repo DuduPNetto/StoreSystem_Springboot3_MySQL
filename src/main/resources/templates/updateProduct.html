@@ -9,9 +9,9 @@
 
 <body>
 	<h1>Product data: </h1>
-	<a th:href="@{/}">Index</a>
+	<a th:href="@{/(token=${tokenValue})}">Index</a>
 
-	<form th:action="@{/product/update}" th:object="${product}" method="post">
+	<form th:action="@{/product/update/(token=${tokenValue})}" th:object="${product}" method="post">
 		<div>
 			<label th:for="id">Id:</label>
 			<input type="text" th:field="*{id}" placeholder="Id" readonly>

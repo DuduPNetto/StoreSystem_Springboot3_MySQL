@@ -8,8 +8,8 @@
 </head>
 
 <body>
-	<a th:href="@{/}">Index</a>
-	<a th:href="@{/product/all}">All products</a>
+	<a th:href="@{/(token=${tokenValue})}">Index</a>
+	<a th:href="@{/product/all/(token=${tokenValue})}">All products</a>
 	<h1>Product created/updated.</h1>
 	<h2>Data:</h2>
 

@@ -22,7 +22,7 @@
 
 <body>
 	<h1>All products</h1>
-	<form th:action="@{/product/search_name/}" th:object="${search}" method="post">
+	<form th:action="@{/product/search_name/(token=${tokenValue})}" th:object="${search}" method="post">
 		<div>
 			<label th:for="search">Search:</label>
 			<input type="text" th:field="*{content}" placeholder="Search" required="required">
@@ -31,8 +31,8 @@
 			<button type="submit">Send</button>
 		</div>
 	</form>
-	<a th:href="@{/}">Index</a>
-	<a th:href="@{/product/register}">Register product</a>
+	<a th:href="@{/(token=${tokenValue})}">Index</a>
+	<a th:href="@{/product/register/(token=${tokenValue})}">Register product</a>
 
 	<div id="wrapper">
 		<header id="home">
@@ -43,9 +43,9 @@
 					<p>Description <b th:text="${product.description}"></b></p>
 					<p>Price: <b th:text="${product.price}"></b></p>
 					<div class="product-links">
-						<a th:href="@{/product/update/(id=${product.id})}">Update</a>
-						<a th:href="@{/product/remove/(id=${product.id})}">Remove</a>
-						<a th:href="@{/product/(id=${product.id})}">See</a>
+						<a th:href="@{/product/update/(id=${product.id},token=${tokenValue})}">Update</a>
+						<a th:href="@{/product/remove/(id=${product.id},token=${tokenValue})}">Remove</a>
+						<a th:href="@{/product/(id=${product.id},token=${tokenValue})}">See</a>
 					</div>
 				</section>
 			</div>
