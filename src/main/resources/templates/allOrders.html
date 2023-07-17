@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>All Orders</title>
+	<style>
+		.products {
+			margin: 5px 10px;
+			padding: 10px;
+			background-color: aqua;
+		}
+
+		.product-links {
+			padding: 10px;
+			background-color: lightgrey;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>All orders</h1>
+	<a th:href="@{/(token=${tokenValue})}">Index</a>
+	<a th:href="@{/order/register/(token=${tokenValue})}">Register Order</a>
+	<section class="orders">
+		<div th:each="order : ${orders}">
+			<h1>Order: <b th:text="${order.id}"></b></h1>
+			<p>Client Name: <b th:text="${order.client.name}"></b></p>
+			<p>Client Email: <b th:text="${order.client.email}"></b></p>
+			<p>Client Phone: <b th:text="${order.client.phone}"></b></p>
+			<h2>Products</h2>
+			<div th:each="product : ${order.products}">
+				<p>Id: <b th:text="${product.getProduct().id}"></b></p>
+				<p>Name: <b th:text="${product.getProduct().name}"></b></p>
+				<p>Description: <b th:text="${product.getProduct().description}"></b></p>
+				<p>Price: <b th:text="${product.getProduct().price}"></b></p>
+				<p>Quantity: <b th:text="${product.getQuantity()}"></b></p>
+				<a th:href="@{/order/remove/(id=${product.getProduct().id},oid=${order.id},token=${tokenValue})}">Remove
+					Product</a>
+			</div>
+			<form th:action="@{/order/add/(id=${order.id},token=${tokenValue})}" th:object="${productToAdd}"
+				method="post">
+				<h1>Add product</h1>
+				<div>
+					<label th:for="productId">Product Id:</label>
+					<input type="text" th:field="*{productId}" placeholder="Product Id" required="required">
+				</div>
+				<div>
+					<label th:for="quantity">Product quantity:</label>
+					<input type="text" th:field="*{quantity}" placeholder="Quantity" required="required">
+				</div>
+				<div>
+					<button type="submit">Send</button>
+				</div>
+			</form>
+			<a th:href="@{/order/find/(id=${order.id},token=${tokenValue})}">See</a>
+		</div>
+	</section>
+</body>
+
+</html>

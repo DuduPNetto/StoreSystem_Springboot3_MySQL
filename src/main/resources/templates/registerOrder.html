@@ -10,9 +10,9 @@
 
 <body>
 	<h1>Register order</h1>
-	<a th:href="@{/}">Index</a>
+	<a th:href="@{/(token=${tokenValue})}">Index</a>
 
-	<form th:action="@{/order/create}" th:object="${order}" method="post">
+	<form th:action="@{/order/create/(token=${tokenValue})}" th:object="${order}" method="post">
 		<div>
 			<label th:for="client.name">Client Name:</label>
 			<input type="text" th:field="*{client.name}" placeholder="Client Name" required="required">

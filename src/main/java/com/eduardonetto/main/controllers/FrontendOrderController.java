@@ -17,6 +17,7 @@ import com.eduardonetto.main.entities.Order;
 import com.eduardonetto.main.entities.OrderProduct;
 import com.eduardonetto.main.entities.Product;
 import com.eduardonetto.main.entities.User;
+import com.eduardonetto.main.security.TokenService;
 import com.eduardonetto.main.services.OrderProductService;
 import com.eduardonetto.main.services.OrderService;
 import com.eduardonetto.main.services.ProductService;
@@ -39,29 +40,43 @@ public class FrontendOrderController {
 	@Autowired
 	private OrderProductService orderProductService;
 
+	@Autowired
+	private TokenService tokenService;
+
 	@GetMapping
-	public String orders(Model model) {
+	public String orders(Model model, @RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		List<Order> orders = orderService.findAll();
 		model.addAttribute("orders", orders);
 		model.addAttribute("productToAdd", new ProductToAdd());
-		return "index";
+		return "allOrders";
 	}
 
 	@GetMapping("/find/")
-	public String findById(Model model, @RequestParam(value = "id") Long id) {
+	public String findById(Model model, @RequestParam(value = "id") Long id,
+			@RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
+		model.addAttribute("productToAdd", new ProductToAdd());
 		Order order = orderService.findById(id);
 		model.addAttribute("orders", order);
-		return "index";
+		return "allOrders";
 	}
 
-	@GetMapping("/register")
-	public String registerOrder(Model model) {
+	@GetMapping("/register/")
+	public String registerOrder(Model model, @RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		model.addAttribute("order", new Order());
 		return "registerOrder";
 	}
 
-	@PostMapping("/create")
-	public RedirectView createOrder(@ModelAttribute Order order) {
+	@PostMapping("/create/")
+	public RedirectView createOrder(Model model, @ModelAttribute Order order,
+			@RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		User user = userService.findByNameAndEmail(order.getClient().getName(), order.getClient().getEmail());
 		if (user != null) {
 			order.setClient(user);
@@ -70,31 +85,36 @@ public class FrontendOrderController {
 			throw new ObjectNotFoundException("Object not found with [name=" + order.getClient().getName() + ", email="
 					+ order.getClient().getEmail());
 		}
-		return new RedirectView("/order/");
+		return new RedirectView("/order/" + "?token=" + token);
 	}
 
 	@GetMapping("/remove/")
 	public RedirectView removeOrderProduct(Model model, @RequestParam(value = "id") Long id,
-			@RequestParam(value = "oid") Long oid) {
+			@RequestParam(value = "oid") Long oid, @RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		Order order = orderService.findById(oid);
 		OrderProduct op = new OrderProduct(order, productService.findById(id), null, null);
 		order.getProducts().remove(op);
 		orderProductService.delete(op);
-		return new RedirectView("/order/");
+		return new RedirectView("/order/" + "?token=" + token);
 	}
 
 	@PostMapping("/add/")
 	public RedirectView addOrderProduct(Model model, @RequestParam(value = "id") Long id,
-			@ModelAttribute ProductToAdd productToAdd) {
+			@ModelAttribute ProductToAdd productToAdd, @RequestParam(value = "token") String token) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
 		try {
 			Order order = orderService.findById(id);
 			Product product = productService.findById(Long.parseLong(productToAdd.getProductId()));
-			OrderProduct orderProduct = new OrderProduct(order, product, productToAdd.getQuantity(), product.getPrice());
+			OrderProduct orderProduct = new OrderProduct(order, product, productToAdd.getQuantity(),
+					product.getPrice());
 			orderProductService.insert(orderProduct);
 		} catch (NumberFormatException e) {
 			throw new ObjectNotFoundException("Invalid Product ID. id=" + id);
 		}
-		return new RedirectView("/order/");
+		return new RedirectView("/order/" + "?token=" + token);
 	}
 
 }

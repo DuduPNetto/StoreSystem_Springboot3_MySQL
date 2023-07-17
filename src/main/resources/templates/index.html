@@ -28,42 +28,10 @@
 			<a th:href="@{/product/register/(token=${tokenValue})}">Register Product</a>
 			<a th:href="@{/product/all/(token=${tokenValue})}">Products</a>
 			<br>
-			<a th:href="@{/order/register/}">Register Order</a>
-			<a th:href="@{/order/}">Orders</a>
+			<a th:href="@{/order/register/(token=${tokenValue})}">Register Order</a>
+			<a th:href="@{/order/(token=${tokenValue})}">Orders</a>
 		</div>
 	</header>
-	<section class="orders">
-		<div th:each="order : ${orders}">
-			<h1>Order: <b th:text="${order.id}"></b></h1>
-			<p>Client Name: <b th:text="${order.client.name}"></b></p>
-			<p>Client Email: <b th:text="${order.client.email}"></b></p>
-			<p>Client Phone: <b th:text="${order.client.phone}"></b></p>
-			<h2>Products</h2>
-			<div th:each="product : ${order.products}">
-				<p>Id: <b th:text="${product.getProduct().id}"></b></p>
-				<p>Name: <b th:text="${product.getProduct().name}"></b></p>
-				<p>Description: <b th:text="${product.getProduct().description}"></b></p>
-				<p>Price: <b th:text="${product.getProduct().price}"></b></p>
-				<p>Quantity: <b th:text="${product.getQuantity()}"></b></p>
-				<a th:href="@{/order/remove/(id=${product.getProduct().id},oid=${order.id})}">Remove Product</a>
-			</div>
-			<form th:action="@{/order/add/(id=${order.id})}" th:object="${productToAdd}" method="post">
-				<h1>Add product</h1>
-				<div>
-					<label th:for="productId">Product Id:</label>
-					<input type="text" th:field="*{productId}" placeholder="Product Id" required="required">
-				</div>
-				<div>
-					<label th:for="quantity">Product quantity:</label>
-					<input type="text" th:field="*{quantity}" placeholder="Quantity" required="required">
-				</div>
-				<div>
-					<button type="submit">Send</button>
-				</div>
-			</form>
-			<a th:href="@{/order/find/(id=${order.id})}">See</a>
-		</div>
-	</section>
 </body>
 
 </html>
