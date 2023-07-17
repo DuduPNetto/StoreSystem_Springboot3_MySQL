@@ -4,9 +4,20 @@ Projeto feito para melhorar os conhecimentos aprendidos na linguagem Java.
 
 O projeto possui um sistema CRUD para usuários, produtos e pedidos.
 
-# Detalhes
+# Importante
+Por padrão o projeto roda no localhost porta 8080. Com conexão com o MySQL. <br/>
+Para acessar as urls é necessário fazer o login com o método POST na url: <br/>
+http://localhost:8080/auth/login <br/>
+Com os dados: <br/>
+{ <br/>
+	"username": "user1", <br/>
+	"password": "12345678" <br/>
+} <br/>
+Este usuário é um admin, que pode cadastrar outros usuários. <br/>
+Após logar é informado um token, o qual pode ser usado para acessar qualquer url com a auth Beaver. <br/>
+Este token pode ser usado também para realizar o login na página Frontend, para cadastro de usuários, produtos e pedidos.
 
-Por padrão o projeto roda no localhost porta 8080. Com conexão com o MySQL.
+# Detalhes
 
 Frontend feito com HTML puro para facilitar o desenvolvimento. <br/>
 Endereços: <br/>
