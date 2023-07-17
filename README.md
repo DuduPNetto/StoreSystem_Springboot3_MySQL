@@ -14,8 +14,24 @@ Com os dados: <br/>
 	"password": "12345678" <br/>
 } <br/>
 Este usuário é um admin, que pode cadastrar outros usuários. <br/>
+
 Após logar é informado um token, o qual pode ser usado para acessar qualquer url com a auth Beaver. <br/>
-Este token pode ser usado também para realizar o login na página Frontend, para cadastro de usuários, produtos e pedidos.
+Será gerado um token semelhante a este: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaS" <br/>
+
+Este token pode ser usado também para realizar o login na página Frontend, para cadastro de usuários, produtos e pedidos. <br/>
+
+Cadastro de usuários com acesso de ADMIN ou USER <br/>
+ADMIN -> Pode acessar qualquer endereço. <br/>
+USER -> Pode cadastrar produtos, usuários e pedidos no Frontend. <br/>
+http://localhost:8080/auth/register <br/>
+Com os dados: <br/>
+{ <br/>
+    "username": "user1", <br/>
+    "password": "12345678", <br/>
+    "name": "Name Lastname", <br/>
+    "email": "email@gmail.com", <br/>
+    "role": "USER" <br/>
+} <br/>
 
 # Detalhes
 
