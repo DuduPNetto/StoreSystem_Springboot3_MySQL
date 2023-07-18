@@ -30,6 +30,7 @@ public class SecurityConfigurations {
 						.requestMatchers(HttpMethod.POST, "/login").permitAll()
 						.requestMatchers(HttpMethod.GET, "/logout/").permitAll()
 						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+						.requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
 						.requestMatchers(HttpMethod.GET, "/user/").permitAll()
 						.requestMatchers(HttpMethod.GET, "/user/all/").permitAll()
 						.requestMatchers(HttpMethod.POST, "/user/search_email/").permitAll()

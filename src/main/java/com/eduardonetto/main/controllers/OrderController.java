@@ -68,14 +68,15 @@ public class OrderController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<OrderDTO> update(@PathVariable Long id, @RequestBody User user) {
-		User entity = userService.findByNameAndEmail(user.getName(), user.getEmail());
+	public ResponseEntity<OrderDTO> update(@PathVariable Long id, @RequestBody Order order) {
+		User entity = userService.findByNameAndEmail(order.getClient().getName(), order.getClient().getEmail());
+		order.setClient(entity);
 		if (entity != null) {
-			Order order = orderService.update(id, entity);
-			return ResponseEntity.ok().body(new OrderDTO(order));
+			Order obj = orderService.update(id, order);
+			return ResponseEntity.ok().body(new OrderDTO(obj));
 		} else {
-			throw new ObjectNotFoundException(
-					"Object not found with [name=" + user.getName() + ", email=" + user.getEmail());
+			throw new ObjectNotFoundException("Object not found with [name=" + order.getClient().getName() + ", email="
+					+ order.getClient().getEmail());
 		}
 	}
 

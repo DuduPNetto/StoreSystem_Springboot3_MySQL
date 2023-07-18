@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.eduardonetto.main.controllers.dto.OrderDTO;
 import com.eduardonetto.main.entities.Order;
-import com.eduardonetto.main.entities.User;
 import com.eduardonetto.main.repositories.OrderRepository;
 import com.eduardonetto.main.services.exceptions.DatabaseException;
 import com.eduardonetto.main.services.exceptions.ObjectNotFoundException;
@@ -42,19 +41,21 @@ public class OrderService {
 		}
 	}
 
-	public Order update(Long id, User client) {
+	public Order update(Long id, Order order) {
 		Order entity = findById(id);
-		updateOrder(entity, client);
+		updateOrder(entity, order);
 		return repository.save(entity);
 	}
 
-	private void updateOrder(Order entity, User client) {
-		entity.setClient(client);
+	private void updateOrder(Order entity, Order order) {
+		entity.setClient(order.getClient());
+		entity.setOrderStatus(order.getOrderStatus());
 	}
 
 	public Order fromDto(OrderDTO orderDto) {
 		Order order = new Order();
 		order.setClient(orderDto.getClient());
+		order.setOrderStatus(orderDto.getOrderStatus());
 		return order;
 	}
 

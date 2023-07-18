@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.eduardonetto.main.entities.enums.OrderStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +26,8 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private Integer orderStatus;
+
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
@@ -34,8 +38,9 @@ public class Order implements Serializable {
 	public Order() {
 	}
 
-	public Order(Long id, User client) {
+	public Order(Long id, OrderStatus orderStatus, User client) {
 		this.id = id;
+		setOrderStatus(orderStatus);
 		this.client = client;
 	}
 
@@ -45,6 +50,16 @@ public class Order implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(orderStatus);
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if (orderStatus != null) {
+			this.orderStatus = orderStatus.getCode();
+		}
 	}
 
 	public User getClient() {

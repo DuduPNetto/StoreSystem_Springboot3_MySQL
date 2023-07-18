@@ -34,8 +34,10 @@ public class DevConfig implements CommandLineRunner {
 		 * Product(null, "Product 4", "Hand made", 14.70); Product p5 = new
 		 * Product(null, "Product 5", "Delicious", 39.00);
 		 * 
-		 * Order o1 = new Order(null, user1); Order o2 = new Order(null, user2); Order
-		 * o3 = new Order(null, user1); Order o4 = new Order(null, user5);
+		 * Order o1 = new Order(null, OrderStatus.CREATED, user1); Order o2 = new
+		 * Order(null, OrderStatus.PAID, user2); Order o3 = new Order(null,
+		 * OrderStatus.CANCELED, user1); Order o4 = new Order(null,
+		 * OrderStatus.DELIVERED, user5);
 		 * 
 		 * userRepository.saveAll(Arrays.asList(user1, user2, user3, user4, user5));
 		 * orderRepository.saveAll(Arrays.asList(o1, o2, o3, o4));
