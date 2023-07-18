@@ -27,6 +27,17 @@
 	<section class="orders">
 		<div th:each="order : ${orders}">
 			<h1>Order: <b th:text="${order.id}"></b></h1>
+			<p>Order Status: <b th:text="${order.getOrderStatus()}"></b></p>
+			<form th:action="@{/order/update/(id=${order.id},token=${tokenValue})}" th:object="${orderStatus}"
+				method="post">
+				<div>
+					<label th:for="orderStatus">Update Status:</label>
+					<input type="text" th:field="*{status}" placeholder="New Order Status" required="required">
+				</div>
+				<div>
+					<button type="submit">Send</button>
+				</div>
+			</form>
 			<p>Client Name: <b th:text="${order.client.name}"></b></p>
 			<p>Client Email: <b th:text="${order.client.email}"></b></p>
 			<p>Client Phone: <b th:text="${order.client.phone}"></b></p>
@@ -56,6 +67,9 @@
 				</div>
 			</form>
 			<a th:href="@{/order/find/(id=${order.id},token=${tokenValue})}">See</a>
+			<br>
+			<br>
+			<br>
 		</div>
 	</section>
 </body>

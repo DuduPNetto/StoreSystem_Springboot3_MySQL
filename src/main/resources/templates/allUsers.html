@@ -56,6 +56,7 @@
 						<p>Orders</p>
 						<div th:each="order : ${user.orders}">
 							<p>Id: <b th:text="${order.id}" /></p>
+							<a th:href="@{/order/find/(id=${order.id},token=${tokenValue})}">See Order</a>
 							<div class="products">
 								<p>Products</p>
 								<div th:each="product : ${order.products}">

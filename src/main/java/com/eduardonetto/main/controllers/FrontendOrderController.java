@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.eduardonetto.main.controllers.query.ProductToAdd;
+import com.eduardonetto.main.controllers.query.UpdateOrderStatus;
 import com.eduardonetto.main.entities.Order;
 import com.eduardonetto.main.entities.OrderProduct;
 import com.eduardonetto.main.entities.Product;
 import com.eduardonetto.main.entities.User;
+import com.eduardonetto.main.entities.enums.OrderStatus;
 import com.eduardonetto.main.security.TokenService;
 import com.eduardonetto.main.services.OrderProductService;
 import com.eduardonetto.main.services.OrderService;
@@ -49,6 +51,7 @@ public class FrontendOrderController {
 		model.addAttribute("tokenValue", token);
 		List<Order> orders = orderService.findAll();
 		model.addAttribute("orders", orders);
+		model.addAttribute("orderStatus", new UpdateOrderStatus());
 		model.addAttribute("productToAdd", new ProductToAdd());
 		return "allOrders";
 	}
@@ -80,6 +83,7 @@ public class FrontendOrderController {
 		User user = userService.findByNameAndEmail(order.getClient().getName(), order.getClient().getEmail());
 		if (user != null) {
 			order.setClient(user);
+			order.setOrderStatus(OrderStatus.CREATED);
 			orderService.insert(order);
 		} else {
 			throw new ObjectNotFoundException("Object not found with [name=" + order.getClient().getName() + ", email="
@@ -113,6 +117,22 @@ public class FrontendOrderController {
 			orderProductService.insert(orderProduct);
 		} catch (NumberFormatException e) {
 			throw new ObjectNotFoundException("Invalid Product ID. id=" + id);
+		}
+		return new RedirectView("/order/" + "?token=" + token);
+	}
+
+	@PostMapping("/update/")
+	public RedirectView addOrderProduct(Model model, @RequestParam(value = "id") Long id,
+			@RequestParam(value = "token") String token, @ModelAttribute UpdateOrderStatus updatedOrderStatus) {
+		tokenService.validateToken(token);
+		model.addAttribute("tokenValue", token);
+		try {
+			OrderStatus orderStatus = OrderStatus.valueOf(updatedOrderStatus.getStatus().toUpperCase());
+			Order order = orderService.findById(id);
+			order.setOrderStatus(orderStatus);
+			orderService.update(id, order);
+		} catch (IllegalArgumentException e) {
+			throw new ObjectNotFoundException("OrderStatus not found. value=" + updatedOrderStatus.getStatus());
 		}
 		return new RedirectView("/order/" + "?token=" + token);
 	}

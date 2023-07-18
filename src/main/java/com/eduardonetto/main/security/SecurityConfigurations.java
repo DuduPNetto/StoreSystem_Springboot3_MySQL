@@ -54,6 +54,7 @@ public class SecurityConfigurations {
 						.requestMatchers(HttpMethod.POST, "/order/create/").permitAll()
 						.requestMatchers(HttpMethod.GET, "/order/remove/").permitAll()
 						.requestMatchers(HttpMethod.POST, "/order/add/").permitAll()
+						.requestMatchers(HttpMethod.POST, "/order/update/").permitAll()
 						.anyRequest().hasRole("ADMIN"))
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}
