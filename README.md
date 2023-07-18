@@ -13,7 +13,7 @@ Com os dados: <br/>
 	"username": "user1", <br/>
 	"password": "12345678" <br/>
 } <br/>
-Este usuário é um admin, que pode cadastrar outros usuários. <br/>
+Este usuário é um admin, que pode acessar qualquer url. <br/>
 
 Após logar é informado um token, o qual pode ser usado para acessar qualquer url com a auth Beaver. <br/>
 Será gerado um token semelhante a este: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaS" <br/>
