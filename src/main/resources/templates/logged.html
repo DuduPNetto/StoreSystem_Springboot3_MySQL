@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Index</title>
+</head>
+
+<body>
+	<h1>Menu</h1>
+	<h2>Successful Login</h2>
+	<header id="home">
+		<div id="links">
+			<br>
+			<a th:href="@{/logout/}">Logout</a>
+			<br>
+			<a th:href="@{/user/register/(token=${tokenValue})}">Register User</a>
+			<a th:href="@{/user/all/(token=${tokenValue})}">Users</a>
+			<br>
+			<a th:href="@{/product/register/(token=${tokenValue})}">Register Product</a>
+			<a th:href="@{/product/all/(token=${tokenValue})}">Products</a>
+			<br>
+			<a th:href="@{/order/register/(token=${tokenValue})}">Register Order</a>
+			<a th:href="@{/order/(token=${tokenValue})}">Orders</a>
+		</div>
+	</header>
+</body>
+
+</html>

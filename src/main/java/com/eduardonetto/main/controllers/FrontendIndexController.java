@@ -28,15 +28,17 @@ public class FrontendIndexController {
 		if (token.trim().length() > 0) {
 			service.validateToken(token);
 			model.addAttribute("tokenValue", token);
+			return "logged";
 		}
-		return "index";	
+		return "index";
 	}
 
 	@PostMapping("/login")
-	public String login(Model model, @ModelAttribute Token token) {
+	public RedirectView login(Model model, @ModelAttribute Token token) {
 		service.validateToken(token.getContent());
 		model.addAttribute("tokenValue", token.getContent());
-		return "index";
+		String tokenValue = (String) model.getAttribute("tokenValue");
+		return new RedirectView("/" + "?token=" + tokenValue);
 	}
 
 	@GetMapping("/logout/")
